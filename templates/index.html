@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/vendor/simple-datatables/style.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+
+<body>
+    <table class="table datatable" id="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+            </tr>
+        </thead>
+        <tbody id="data-table-body">
+        </tbody>
+    </table>
+    <script>
+        fetch('http://127.0.0.1:3000/employees')
+            .then(response => response.json())
+            .then(data => {  displayData(data) })
+            .catch(error => console.error(error))
+
+        function displayData(data) {
+            const tableBody = document.getElementById("data-table-body");
+            console.log(data);
+            if (Array.isArray(data.employees)) {
+                data.employees.forEach(function (item) {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `<th scope="row">${item.id}</th><td>${item.Nom}</td><td>${item.Prénom}</td>`;
+                    console.log("row", row);
+                    tableBody.appendChild(row);
+                });
+            }
+        }
+    </script>
+    <!-- End Table with stripped rows -->
+
+    <script src="/static/vendor/simple-datatables/simple-datatables.js"></script>
+
+</body>
+
+</html>
